@@ -90,7 +90,7 @@ public class RoomManager {
         return null;
     }
 
-    public int getHeat(int x, int y, int z) {
+    public int getHeat(int x, int y, int z, World world) {
         AirBubbleFinder.AirBubble airBubble = getAirBubble(x, y, z);
         if (airBubble != null) {
             return airBubble.heat;
@@ -107,6 +107,7 @@ public class RoomManager {
         if (airBubble != null) {
             String key = AirBubbleFinder.getKey(x, y, z);
             airBubble.heatSources.put(key, heat);
+            airBubble.heat += heat;
 
             EnvironmentzMain.LOGGER.error("Added heatsource (key: {} heat: {}) to airbubble {}", key, heat, airBubble.hash);
         }
@@ -117,6 +118,10 @@ public class RoomManager {
 
         if (airBubble != null) {
             String key = AirBubbleFinder.getKey(x, y, z);
+            if (airBubble.heatSources.containsKey(key)) {
+                int heat = airBubble.heatSources.get(key);
+                airBubble.heat -= heat;
+            }
             airBubble.heatSources.remove(key);
 
             if (airBubble.heatSources.isEmpty()) {

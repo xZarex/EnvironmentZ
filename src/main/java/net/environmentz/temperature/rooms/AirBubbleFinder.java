@@ -83,11 +83,17 @@ public class AirBubbleFinder {
             if (!isFirstIteration && (visited.contains(key) || !isValidCell(x, y, z, grid)))
                 continue;
 
-            isFirstIteration = false;
+
 
             visited.add(key);
 
-            airBubble.add(key);
+            if (!isFirstIteration)
+                airBubble.add(key);
+            else
+                if (isValidCell(x, y, z, grid))
+                    airBubble.add(key);
+
+            isFirstIteration = false;
 
             if (airBubble.size() > MAX_AIR_BUBBLE_SIZE)
                 return false;

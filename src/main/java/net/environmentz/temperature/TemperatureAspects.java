@@ -11,6 +11,7 @@ import net.environmentz.init.ConfigInit;
 import net.environmentz.init.TagInit;
 import net.environmentz.mixin.access.EntityAccessor;
 import net.environmentz.network.EnvironmentServerPacket;
+import net.environmentz.temperature.rooms.RoomManager;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -26,6 +27,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -263,6 +265,12 @@ public class TemperatureAspects {
                 z += dz;
             }
         }
+
+        // Room Heat
+        int heat = RoomManager.getInstance().getHeat(playerEntity.getBlockX(), playerEntity.getBlockY()+1, playerEntity.getBlockZ(), playerEntity.getWorld());
+        playerEntity.sendMessage(Text.of("Heat: " + heat));
+        calculatingTemperature += heat;
+        thermometerCalculatingTemperature += heat;
 
         // Item
         int itemTemperature = itemTemperature(playerEntity, temperatureManager);
