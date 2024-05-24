@@ -14,7 +14,9 @@
     "PowderSnowBlockMixin",
     "SpawnLocatingMixin",
     "CampfireBlockEntityMixin",
-    "access.EntityAccessor"
+    "access.EntityAccessor",
+    "AbstractFurnanceBlockEntityMixin",
+    "ServerWorldMixin"
   ],
   "client": [
     "client.InGameOverlayRendererMixin",
