@@ -26,7 +26,7 @@ public class AbstractFurnanceBlockEntityMixin {
         EnvironmentzMain.LOGGER.error("furnance state change: "+world.getBlockState(pos).get(AbstractFurnaceBlock.LIT));
         if (world.getBlockState(pos).get(AbstractFurnaceBlock.LIT)) {
             if (world instanceof ServerWorld) {
-                RoomManager.getInstance(world.getServer()).addHeatSource(pos.getX(), pos.getY(), pos.getZ(), world, 4, 0);
+                RoomManager.getInstance(world.getServer()).addHeatSource(pos.getX(), pos.getY(), pos.getZ(), world, 2, 0);
             }
         }
     }
