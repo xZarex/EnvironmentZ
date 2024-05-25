@@ -267,8 +267,7 @@ public class TemperatureAspects {
         }
 
         // Room Heat
-        int heat = RoomManager.getInstance().getHeat(playerEntity.getBlockX(), playerEntity.getBlockY()+1, playerEntity.getBlockZ(), playerEntity.getWorld());
-        playerEntity.sendMessage(Text.of("Heat: " + heat));
+        int heat = RoomManager.getInstance(playerEntity.getServer()).getHeat(playerEntity.getBlockX(), playerEntity.getBlockY()+1, playerEntity.getBlockZ(), playerEntity.getWorld());
         calculatingTemperature += heat;
         thermometerCalculatingTemperature += heat;
 

@@ -3,32 +3,21 @@ package net.environmentz.temperature.rooms;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.io.Serializable;
 import java.security.MessageDigest;
 import java.util.*;
 
 public class AirBubbleFinder {
-    public class AirBubble {
-        // TODO: add world, air bubbles are world depended
-        public int size;
-        public String hash;
-        public int x;
-        public int y;
-        public int z;
-        public Set<String> blocks;
-        public HashMap<String, Integer> heatSources;
-        public int heat;
-    }
-
     private static final int MAX_AIR_BUBBLE_SIZE = 100 * 100 * 100;
 
     public AirBubble getAirBubble(int x, int y, int z, World grid) {
         Set<String> visited = new HashSet<>();
-        Set<String> airBubble = new HashSet<>();
+        HashSet<String> airBubble = new HashSet<>();
 
         if (!exploreAirBubble(x, y, z, grid, visited, airBubble, x, y, z))
             return null;
 
-        AirBubble ret = new AirBubbleFinder.AirBubble();
+        AirBubble ret = new AirBubble();
         ret.size = airBubble.size();
         ret.hash = generateHash(airBubble);
         ret.x = x;
@@ -82,8 +71,6 @@ public class AirBubbleFinder {
             String key = getKey(x, y, z);
             if (!isFirstIteration && (visited.contains(key) || !isValidCell(x, y, z, grid)))
                 continue;
-
-
 
             visited.add(key);
 

@@ -4,6 +4,7 @@ import net.environmentz.EnvironmentzMain;
 import net.environmentz.temperature.rooms.RoomManager;
 import net.minecraft.block.AbstractFurnaceBlock;
 import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Property;
 import org.spongepowered.asm.mixin.Mixin;
@@ -23,9 +24,10 @@ public class AbstractFurnanceBlockEntityMixin {
     @Inject(method = "tick", at=@At(value = "INVOKE", target = "Lnet/minecraft/world/World;setBlockState(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;I)Z", shift = At.Shift.AFTER))
     private static void tick(World world, BlockPos pos, BlockState state, AbstractFurnaceBlockEntity blockEntity, CallbackInfo info) {
         EnvironmentzMain.LOGGER.error("furnance state change: "+world.getBlockState(pos).get(AbstractFurnaceBlock.LIT));
-        if (world.getBlockState(pos).get(AbstractFurnaceBlock.LIT))
-            RoomManager.getInstance().addHeatSource(pos.getX(), pos.getY(), pos.getZ(), world, 4);
-        else
-            RoomManager.getInstance().removeHeatSource(pos.getX(), pos.getY(), pos.getZ(), world);
+        if (world.getBlockState(pos).get(AbstractFurnaceBlock.LIT)) {
+            if (world instanceof ServerWorld) {
+                RoomManager.getInstance(world.getServer()).addHeatSource(pos.getX(), pos.getY(), pos.getZ(), world, 4, 0);
+            }
+        }
     }
 }

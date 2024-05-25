@@ -17,6 +17,6 @@ public class ServerWorldMixin {
 
     @Inject(method = "tick", at=@At("HEAD"))
     public void tick(BooleanSupplier shouldKeepTicking, CallbackInfo ci) {
-        RoomManager.getInstance().tick((World)(Object)this);
+        RoomManager.getInstance(((ServerWorld)(Object)this).getServer()).tick((World)(Object)this);
     }
 }
