@@ -124,7 +124,7 @@ public class RoomManager {
                     for (Map.Entry<String, HeatSource> heatSource : existingBubble.heatSources.entrySet()) {
                         heatSource.getValue().nextUpdate -= 1;
                         if (heatSource.getValue().nextUpdate <= 0) {
-                            heatSource.getValue().nextUpdate = 10;
+                            heatSource.getValue().nextUpdate = 5;
                             // if our chunk is loaded we can validate the heatsource
                             if (world.isChunkLoaded(ChunkSectionPos.getSectionCoord(heatSource.getValue().x), ChunkSectionPos.getSectionCoord(heatSource.getValue().z))) {
                                 BlockState blockState = world.getBlockState(new BlockPos(heatSource.getValue().x, heatSource.getValue().y, heatSource.getValue().z));
@@ -259,7 +259,7 @@ public class RoomManager {
             heatSource.y = y;
             heatSource.z = z;
             heatSource.valid = true;
-            heatSource.nextUpdate = 10;
+            heatSource.nextUpdate = 5;
 
             airBubble.heatSources.put(key, heatSource);
             airBubble.heat += currentHeat;
